@@ -14,6 +14,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/tasks", async (req, res) => {
+  if (!req.headers.authorization) {
+    res.status(400).send("No authorization");
+  }
   const tasks = await db.client.query(`Select * from tasks`);
   res.send(tasks);
 });
